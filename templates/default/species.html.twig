@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DefaultController!{% endblock %}
+
+{% block body %}
+    <!-- Features -->
+    <!-- Main -->
+        <main id="main-wrapper">
+            <div class="container">
+                <div id="content">
+
+                    <!-- Content -->
+                    <article>
+
+                        <h2>{{specie.name}}</h2>
+                        <img class="image featured" src="{{ asset("images/"~specie.image) }}" alt="" /></a>
+
+                        <p>{{ specie.description}}</p>
+                        <h3>Caractéristiques :</h3>
+                        <p>Taille de la reine : {{ specie.getQueenSizeMin() }} à {{ specie.getQueenSizeMax() }} millimètres</p>
+                        <p>Taille des ouvriére : {{ specie.getWorkersSizeMin() }} à {{ specie.getWorkersSizeMax() }} millimètres</p>
+                        <p>Période de reproduction / Essaimage : {{ specie.getSwarming() }}</p>
+
+                    </article>
+                </div>
+            </div>
+
+        </main>
+    <main id="features-wrapper">
+        <div class="container">
+            <div id="content">
+                <div class="container">
+
+                    <div class="row">
+                        <!-- 3fois -->
+                        {% if is_granted("ROLE_USER") %}
+                        <div class="col-4 col-12-medium">
+                            <!-- Box -->
+                            <section class="box feature">
+                                <div class="inner">
+                                    <header>
+                                        <h2>Ajouter un conseil d'élevage</h2>
+                                    </header>
+                                    <p>{{ form(form) }}</p>
+                                </div>
+                            </section>
+                        </div>
+                        {% endif %}
+                        {% for bs in specie.getBreedingSheets() %}
+                            <div class="col-4 col-12-medium">
+                                <!-- Box -->
+                                <section class="box feature">
+                                    <div class="inner">
+                                        <header>
+                                            <h2>{{ bs.nom }}</h2>
+                                            <h6>{{ bs.getUser().getUsername() }} le {{ bs.getDate()|date("d/m/Y") }}</h6>
+                                        </header>
+                                        <p>{{ bs.description|truncate(150) }}</p>
+                                    </div>
+                                </section>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

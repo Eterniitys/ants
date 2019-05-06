@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DefaultController!{% endblock %}
+
+{% block body %}
+    <!-- Features -->
+    <!-- Banner -->
+    <div id="banner-wrapper">
+        <div id="banner" class="box container">
+            <div class="row">
+                <div class="col-12 col-12-medium">
+                    <h2>Bienvenue sur Ants.</h2>
+                    <p>Retrouvez ici les meilleurs conseils d'élevage pour vos fourmis</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <main id="features-wrapper">
+        <div class="container">
+            <div class="row">
+                <!-- 3fois -->
+                {% for g in genders %}
+                <div class="col-4 col-12-medium">
+                    <!-- Box -->
+                    <section class="box feature">
+                        <a href="{{ path("gender" , {'name' : g.name}) }}" class="image featured"><img src="{{ asset("images/"~g.getSpecies()[0].image) }}" alt="" /></a>
+                        <div class="inner">
+                            <header>
+                                <h2>{{ g.name }}</h2>
+                            </header>
+                            <p>{{ g.description|truncate(150)}}</p>
+                        </div>
+                    </section>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+{% endblock %}
